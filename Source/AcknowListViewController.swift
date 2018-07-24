@@ -48,6 +48,24 @@ open class AcknowListViewController: UITableViewController {
      It expects to get set by "User Defined Runtime Attributes" in Interface Builder.
      */
     @IBInspectable var acknowledgementsPlistName: String?
+    
+    /**
+     Background color to be used for both list and detail views for styling purposes.
+     It needs to get set before `viewDidLoad` gets called.
+     */
+    @IBInspectable open var backgroundColor: UIColor?
+    
+    /**
+     Background color to be used for cells for styling purposes.
+     It needs to get set before `viewDidLoad` gets called.
+     */
+    @IBInspectable open var cellBackgroundColor: UIColor?
+    
+    /**
+     Font color to be used for acknowledgement text.
+     It needs to get set before `viewDidLoad` gets called.
+     */
+    @IBInspectable open var textColor: UIColor?
 
 
     // MARK: - Initialization
@@ -192,6 +210,8 @@ open class AcknowListViewController: UITableViewController {
 
         self.configureHeaderView()
         self.configureFooterView()
+        
+        self.tableView.backgroundColor = self.backgroundColor ?? self.tableView.backgroundColor
 
         if let navigationController = self.navigationController {
             if self.presentingViewController != nil &&
@@ -382,12 +402,14 @@ open class AcknowListViewController: UITableViewController {
         }
         else {
             cell = UITableViewCell(style: UITableViewCellStyle.default, reuseIdentifier: CellIdentifier)
+            cell.backgroundColor = self.cellBackgroundColor ?? cell.backgroundColor
         }
 
         if let acknowledgements = self.acknowledgements,
             let acknowledgement = acknowledgements[(indexPath as NSIndexPath).row] as Acknow?,
             let textLabel = cell.textLabel as UILabel? {
                 textLabel.text = acknowledgement.title
+                textLabel.textColor = self.textColor ?? textLabel.textColor
                 cell.accessoryType = UITableViewCellAccessoryType.disclosureIndicator
         }
 
@@ -407,6 +429,8 @@ open class AcknowListViewController: UITableViewController {
         let acknowledgement = acknowledgements[(indexPath as NSIndexPath).row] as Acknow?,
         let navigationController = self.navigationController {
                 let viewController = AcknowViewController(acknowledgement: acknowledgement)
+                viewController.textView?.backgroundColor = self.backgroundColor ?? viewController.textView?.backgroundColor
+                viewController.textView?.textColor = self.textColor ?? viewController.textView?.textColor
                 navigationController.pushViewController(viewController, animated: true)
         }
     }
