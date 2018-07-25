@@ -98,7 +98,7 @@ open class AcknowListViewController: UITableViewController {
      - returns: The new `AcknowListViewController` instance.
      */
     public init(acknowledgementsPlistPath: String?) {
-        super.init(style: .grouped)
+        super.init(style: .plain)
 
         self.commonInit(acknowledgementsPlistPath: acknowledgementsPlistPath)
     }
@@ -111,7 +111,7 @@ open class AcknowListViewController: UITableViewController {
      - returns: The new `AcknowListViewController` instance.
      */
     public required init(coder aDecoder: NSCoder) {
-        super.init(style: .grouped)
+        super.init(style: .plain)
         let path = AcknowListViewController.defaultAcknowledgementsPlistPath()
         self.commonInit(acknowledgementsPlistPath: path)
     }
